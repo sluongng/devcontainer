@@ -1,0 +1,69 @@
+load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier", "buildifier_test")
+
+###########
+# Gazelle #
+###########
+
+# gazelle:prefix github.com/sluongng/devcontainer
+gazelle(name = "gazelle")
+
+gazelle(
+    name = "gazelle-fix",
+    command = "fix",
+)
+
+#############
+# Buidifier #
+#############
+
+buildifier(
+    name = "buildifier",
+)
+
+buildifier(
+    name = "buildifier_fix",
+    lint_mode = "fix",
+)
+
+buildifier_test(
+    name = "check_starlark_format",
+    size = "small",
+    timeout = "short",
+    srcs = ["//:starlark_files"],
+    lint_mode = "warn",
+)
+
+##############
+# filegroups #
+##############
+
+filegroup(
+    name = "starlark_files",
+    srcs = glob(
+        include = [
+            "**/*.BUILD",
+            "**/*.bzl",
+            "**/*.sky",
+            "**/BUILD",
+            "**/BUILD.*.bazel",
+            "**/BUILD.*.oss",
+            "**/BUILD.bazel",
+            "**/WORKSPACE",
+            "**/WORKSPACE.*.bazel",
+            "**/WORKSPACE.*.oss",
+            "**/WORKSPACE.bazel",
+            "*.BUILD",
+            "*.bzl",
+            "*.sky",
+            "BUILD.*.bazel",
+            "BUILD.*.oss",
+            "WORKSPACE.*.bazel",
+            "WORKSPACE.*.oss",
+        ],
+        exclude = [
+            "bazel-*/**",
+            ".git/**",
+        ],
+    ),
+)

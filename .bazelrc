@@ -1,0 +1,23 @@
+# Use Sandbox with Persistent Workers
+# Doc: https://docs.bazel.build/versions/master/persistent-workers.html
+build --worker_sandboxing
+
+# Make sure that files cant be used accross packages
+# without a visible filegroup
+build --strict_filesets
+
+# Limit which environment variable is available to Bazel at build time.
+# This improves the shared remote cache hit rates between different
+# users.
+build --incompatible_strict_action_env
+
+# Display bazel target type
+query --output=label_kind
+
+# Tests should have 'size' attribute added
+test --test_verbose_timeout_warnings
+test --test_output=errors
+
+# Clean faster, but not on CI as container might
+# get killed before it finished cleaning
+clean --async
