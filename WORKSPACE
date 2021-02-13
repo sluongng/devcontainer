@@ -41,22 +41,17 @@ go_rules_dependencies()
 
 go_register_toolchains()
 
+############################
+# External Go Dependencies #
+############################
+load("//third_party:go_deps.bzl", "go_dependencies")
+
+# gazelle:repository_macro third_party/go_deps.bzl%_go_dependencies
+go_dependencies()
+
 ##############
 # Buildtools #
 ##############
-http_archive(
-    name = "com_google_protobuf",
-    sha256 = "6dd0f6b20094910fbb7f1f7908688df01af2d4f6c5c21331b9f636048674aebf",
-    strip_prefix = "protobuf-3.14.0",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protobuf-all-3.14.0.tar.gz",
-    ],
-)
-
-load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
-
-protobuf_deps()
-
 http_archive(
     name = "com_github_bazelbuild_buildtools",
     sha256 = "2adaafee16c53b80adff742b88bc90b2a5e99bf6889a5d82f22ef66655dc467b",
@@ -66,10 +61,45 @@ http_archive(
     ],
 )
 
-############################
-# External Go Dependencies #
-############################
-load("//third_party:go_deps.bzl", "go_dependencies")
+http_archive(
+    name = "com_google_protobuf",
+    sha256 = "6dd0f6b20094910fbb7f1f7908688df01af2d4f6c5c21331b9f636048674aebf",
+    strip_prefix = "protobuf-3.14.0",
+    urls = [
+        "https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protobuf-all-3.14.0.tar.gz",
+    ],
+)
 
-# gazelle:repository_macro third_party/go_deps.bzl%_go_dependencies
-go_dependencies()
+#############
+# Container #
+#############
+http_archive(
+    name = "io_bazel_rules_docker",
+    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
+    strip_prefix = "rules_docker-0.15.0",
+    urls = [
+        "https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz",
+    ],
+)
+
+load(
+    "@io_bazel_rules_docker//repositories:repositories.bzl",
+    container_repositories = "repositories",
+)
+
+container_repositories()
+
+load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
+
+# This would load a set of golang repositories that might bring a different version
+# than the one we were expecting in go_dependencies(). So we need to load it after go_dependencies().
+container_deps()
+
+################################
+# Dependencies for Build Tools #
+################################
+load("@com_google_protobuf//:protobuf_deps.bzl", "protobuf_deps")
+
+# This would load a different version of rules_python than the one needed in rules_docker
+# so we need to load it after container_deps()
+protobuf_deps()

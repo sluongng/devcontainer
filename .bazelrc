@@ -21,3 +21,7 @@ test --test_output=errors
 # Clean faster, but not on CI as container might
 # get killed before it finished cleaning
 clean --async
+
+# Fix current issue with rules_docker not being compatible
+# with Bazel 4.0.0 new default
+common --incompatible_restrict_string_escapes=false
