@@ -1,0 +1,14 @@
+schemaVersion: "2.0.0"
+
+fileContentTests:
+  - name: "os-version"
+    path: "/etc/os-release"
+    expectedContents: [
+      'NAME="Ubuntu"',
+      'ID=ubuntu',
+      'ID_LIKE=debian',
+      'PRETTY_NAME="Ubuntu 20.10"',
+      'VERSION_ID="20.10"',
+      'VERSION_CODENAME=groovy',
+      'UBUNTU_CODENAME=groovy',
+    ]
