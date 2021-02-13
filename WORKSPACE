@@ -95,6 +95,10 @@ load("@io_bazel_rules_docker//repositories:deps.bzl", container_deps = "deps")
 # than the one we were expecting in go_dependencies(). So we need to load it after go_dependencies().
 container_deps()
 
+load("//third_party:container_deps.bzl", "external_containner_images")
+
+external_containner_images()
+
 ################################
 # Dependencies for Build Tools #
 ################################
