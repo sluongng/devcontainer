@@ -73,12 +73,16 @@ http_archive(
 #############
 # Container #
 #############
+RULES_DOCKER_COMMIT = "e15c9ebf203b7fa708e69ff5f1cdcf427d7edf6f"
+
+RULES_DOCKER_SHA256 = "f4a39a410da7e497a7ccd19e28c69c93a851d6adb76798355a0c8ba9855e9b75"
+
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = "1698624e878b0607052ae6131aa216d45ebb63871ec497f26c67455b34119c80",
-    strip_prefix = "rules_docker-0.15.0",
+    sha256 = RULES_DOCKER_SHA256,
+    strip_prefix = "rules_docker-{}".format(RULES_DOCKER_COMMIT),
     urls = [
-        "https://github.com/bazelbuild/rules_docker/releases/download/v0.15.0/rules_docker-v0.15.0.tar.gz",
+        "https://github.com/bazelbuild/rules_docker/archive/{}.zip".format(RULES_DOCKER_COMMIT),
     ],
 )
 
