@@ -29,8 +29,8 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchai
 go_download_sdk(
     name = "go_sdk",
     sdks = {
-        "darwin_amd64": ("go1.16rc1.darwin-amd64.tar.gz", "7c060b231b670321bd0f01085a4b2f7dcaf02d584cc50c42de7418158af23771"),
-        "linux_amd64": ("go1.16rc1.linux-amd64.tar.gz", "6a62610f56a04bae8702cd2bd73bfea34645c1b89ded3f0b81a841393b6f1f14"),
+        "darwin_amd64": ("go1.16.darwin-amd64.tar.gz", "6000a9522975d116bf76044967d7e69e04e982e9625330d9a539a8b45395f9a8"),
+        "linux_amd64": ("go1.16.linux-amd64.tar.gz", "013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"),
     },
     urls = [
         "https://dl.google.com/go/{}",
