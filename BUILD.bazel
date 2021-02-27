@@ -1,4 +1,5 @@
 load("@bazel_gazelle//:def.bzl", "gazelle")
+load("@aisbaa_rules_deb_packages//deb_packages:defs.bzl", "update_deb_packages")
 load("@com_github_bazelbuild_buildtools//buildifier:def.bzl", "buildifier", "buildifier_test")
 
 ###########
@@ -32,6 +33,17 @@ buildifier_test(
     timeout = "short",
     srcs = ["//:starlark_files"],
     lint_mode = "warn",
+)
+
+#############
+# Packaging #
+#############
+
+update_deb_packages(
+    name = "update_deb_packages",
+    pgp_keys = [
+        "@debian_bullseye_archive_key//file",
+    ],
 )
 
 ##############
