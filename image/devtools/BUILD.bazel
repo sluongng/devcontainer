@@ -1,0 +1,25 @@
+load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
+load("@io_bazel_rules_docker//container:container.bzl", "container_image")
+load("@debian_bullseye_amd64_pkgs//debs:deb_packages.bzl", "debian_bullseye_amd64_pkgs")
+
+container_image(
+    name = "devtools_container",
+    base = "@amd64_ubuntu20.10//image:image",
+    debs = [
+        debian_bullseye_amd64_pkgs["git"],
+        debian_bullseye_amd64_pkgs["ripgrep"],
+        debian_bullseye_amd64_pkgs["fd-find"],
+        debian_bullseye_amd64_pkgs["fzf"],
+    ],
+    tags = [
+        "deb_packages_auto",
+    ],
+)
+
+container_test(
+    name = "devtools_image_test",
+    size = "small",
+    configs = [":devtools_image_test.yml"],
+    driver = "tar",
+    image = ":devtools_container",
+)

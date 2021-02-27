@@ -1,9 +1,10 @@
 load("@io_bazel_rules_docker//contrib:test.bzl", "container_test")
 
+# External image test(s)
 container_test(
     name = "base_image_test",
     size = "small",
-    configs = ["//third_party:ubuntu_image_test.yml"],
+    configs = [":ubuntu_image_test.yml"],
     driver = "tar",
     image = "@amd64_ubuntu20.10//image:image",
 )
