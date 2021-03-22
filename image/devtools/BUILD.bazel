@@ -20,6 +20,9 @@ container_test(
     name = "devtools_image_test",
     size = "small",
     configs = [":devtools_image_test.yml"],
-    driver = "tar",
+    driver = select({
+        "@platforms//os:linux": "tar",
+        "@platforms//os:osx": "docker",
+    }),
     image = ":devtools_container",
 )

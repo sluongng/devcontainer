@@ -4,16 +4,16 @@ fileExistenceTests:
   - name: "git-should-exits"
     path: "/usr/bin/git"
     shouldExist: true
-    permissions: '-rwxr-xr-x'
+    isExecutableBy: 'any'
   - name: "fd-should-exits"
     path: "/usr/bin/fdfind"
     shouldExist: true
-    permissions: '-rwxr-xr-x'
+    isExecutableBy: 'any'
   - name: "ripgrep-should-exits"
     path: "/usr/bin/rg"
     shouldExist: true
-    permissions: '-rwxr-xr-x'
+    isExecutableBy: 'any'
   - name: "fzf-should-exits"
     path: "/usr/bin/fzf"
     shouldExist: true
-    permissions: '-rwxr-xr-x'
+    isExecutableBy: 'any'
