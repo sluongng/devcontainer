@@ -8,19 +8,19 @@ load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file"
 ##########
 http_archive(
     name = "io_bazel_rules_go",
-    sha256 = "7904dbecbaffd068651916dce77ff3437679f9d20e1a7956bff43826e7645fcc",
+    sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.25.1/rules_go-v0.25.1.tar.gz",
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.25.1/rules_go-v0.25.1.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
+        "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
     ],
 )
 
 http_archive(
     name = "bazel_gazelle",
-    sha256 = "222e49f034ca7a1d1231422cdb67066b885819885c356673cb1f72f748a3c9d4",
+    sha256 = "62ca106be173579c0a167deb23358fdfe71ffa1e4cfdddf5582af26520f1c66f",
     urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.22.3/bazel-gazelle-v0.22.3.tar.gz",
+        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
+        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
     ],
 )
 
@@ -29,8 +29,8 @@ load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchai
 go_download_sdk(
     name = "go_sdk",
     sdks = {
-        "darwin_amd64": ("go1.16.darwin-amd64.tar.gz", "6000a9522975d116bf76044967d7e69e04e982e9625330d9a539a8b45395f9a8"),
-        "linux_amd64": ("go1.16.linux-amd64.tar.gz", "013a489ebb3e24ef3d915abe5b94c3286c070dfe0818d5bca8108f1d6e8440d2"),
+        "darwin_amd64": ("go1.16.2.darwin-amd64.tar.gz", "c98cde81517c5daf427f3071412f39d5bc58f6120e90a0d94cc51480fa04dbc1"),
+        "linux_amd64": ("go1.16.2.linux-amd64.tar.gz", "542e936b19542e62679766194364f45141fde55169db2d8d01046555ca9eb4b8"),
     },
     urls = [
         "https://dl.google.com/go/{}",
@@ -54,36 +54,30 @@ go_dependencies()
 ##############
 http_archive(
     name = "com_github_bazelbuild_buildtools",
-    sha256 = "2adaafee16c53b80adff742b88bc90b2a5e99bf6889a5d82f22ef66655dc467b",
-    strip_prefix = "buildtools-4.0.0",
+    sha256 = "932160d5694e688cb7a05ac38efba4b9a90470c75f39716d85fb1d2f95eec96d",
+    strip_prefix = "buildtools-4.0.1",
     urls = [
-        "https://github.com/bazelbuild/buildtools/archive/4.0.0.zip",
+        "https://github.com/bazelbuild/buildtools/archive/4.0.1.zip",
     ],
 )
 
 http_archive(
     name = "com_google_protobuf",
-    sha256 = "6dd0f6b20094910fbb7f1f7908688df01af2d4f6c5c21331b9f636048674aebf",
-    strip_prefix = "protobuf-3.14.0",
+    sha256 = "a96d66a29df73991ece4d82f04abf242d28f4cdacd7eb0ddf47f75a344a290af",
+    strip_prefix = "protobuf-3.15.6",
     urls = [
-        "https://github.com/protocolbuffers/protobuf/releases/download/v3.14.0/protobuf-all-3.14.0.tar.gz",
+        "https://github.com/protocolbuffers/protobuf/releases/download/v3.15.6/protobuf-all-3.15.6.tar.gz",
     ],
 )
 
 #############
 # Container #
 #############
-RULES_DOCKER_COMMIT = "e15c9ebf203b7fa708e69ff5f1cdcf427d7edf6f"
-
-RULES_DOCKER_SHA256 = "f4a39a410da7e497a7ccd19e28c69c93a851d6adb76798355a0c8ba9855e9b75"
-
 http_archive(
     name = "io_bazel_rules_docker",
-    sha256 = RULES_DOCKER_SHA256,
-    strip_prefix = "rules_docker-{}".format(RULES_DOCKER_COMMIT),
-    urls = [
-        "https://github.com/bazelbuild/rules_docker/archive/{}.zip".format(RULES_DOCKER_COMMIT),
-    ],
+    sha256 = "95d39fd84ff4474babaf190450ee034d958202043e366b9fc38f438c9e6c3334",
+    strip_prefix = "rules_docker-0.16.0",
+    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.16.0/rules_docker-v0.16.0.tar.gz"],
 )
 
 load(
