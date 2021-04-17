@@ -32,7 +32,6 @@ buildifier_test(
     size = "small",
     timeout = "short",
     srcs = ["//:starlark_files"],
-    lint_mode = "warn",
 )
 
 #############

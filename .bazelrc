@@ -13,7 +13,7 @@ build --incompatible_strict_action_env
 
 # Needed for some targets using shebang '/usr/bin/env python'
 # and cannot find 'python'.
-build --action_env=PATH
+# build --action_env=PATH
 
 # Display bazel target type
 query --output=label_kind

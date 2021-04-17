@@ -5,9 +5,6 @@ container_test(
     name = "base_image_test",
     size = "small",
     configs = [":ubuntu_image_test.yml"],
-    driver = select({
-        "@platforms//os:linux": "tar",
-        "@platforms//os:osx": "docker",
-    }),
+    driver = "tar",
     image = "@amd64_ubuntu20.10//image:image",
 )

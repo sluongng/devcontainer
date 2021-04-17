@@ -1,29 +1,13 @@
 #########
 # Bazel #
 #########
-load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_archive", "http_file")
+load("//third_party:build_rule_deps.bzl", "build_rule_deps")
+
+build_rule_deps()
 
 ##########
 # Golang #
 ##########
-http_archive(
-    name = "io_bazel_rules_go",
-    sha256 = "69de5c704a05ff37862f7e0f5534d4f479418afc21806c887db544a316f3cb6b",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-        "https://github.com/bazelbuild/rules_go/releases/download/v0.27.0/rules_go-v0.27.0.tar.gz",
-    ],
-)
-
-http_archive(
-    name = "bazel_gazelle",
-    sha256 = "62ca106be173579c0a167deb23358fdfe71ffa1e4cfdddf5582af26520f1c66f",
-    urls = [
-        "https://mirror.bazel.build/github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
-        "https://github.com/bazelbuild/bazel-gazelle/releases/download/v0.23.0/bazel-gazelle-v0.23.0.tar.gz",
-    ],
-)
-
 load("@io_bazel_rules_go//go:deps.bzl", "go_download_sdk", "go_register_toolchains", "go_rules_dependencies")
 
 go_download_sdk(
@@ -49,37 +33,9 @@ load("//third_party:go_deps.bzl", "go_dependencies")
 # gazelle:repository_macro third_party/go_deps.bzl%_go_dependencies
 go_dependencies()
 
-##############
-# Buildtools #
-##############
-http_archive(
-    name = "com_github_bazelbuild_buildtools",
-    sha256 = "932160d5694e688cb7a05ac38efba4b9a90470c75f39716d85fb1d2f95eec96d",
-    strip_prefix = "buildtools-4.0.1",
-    urls = [
-        "https://github.com/bazelbuild/buildtools/archive/4.0.1.zip",
-    ],
-)
-
-http_archive(
-    name = "com_google_protobuf",
-    sha256 = "a96d66a29df73991ece4d82f04abf242d28f4cdacd7eb0ddf47f75a344a290af",
-    strip_prefix = "protobuf-3.15.6",
-    urls = [
-        "https://github.com/protocolbuffers/protobuf/releases/download/v3.15.6/protobuf-all-3.15.6.tar.gz",
-    ],
-)
-
 #############
 # Container #
 #############
-http_archive(
-    name = "io_bazel_rules_docker",
-    sha256 = "95d39fd84ff4474babaf190450ee034d958202043e366b9fc38f438c9e6c3334",
-    strip_prefix = "rules_docker-0.16.0",
-    urls = ["https://github.com/bazelbuild/rules_docker/releases/download/v0.16.0/rules_docker-v0.16.0.tar.gz"],
-)
-
 load(
     "@io_bazel_rules_docker//repositories:repositories.bzl",
     container_repositories = "repositories",
@@ -109,17 +65,11 @@ protobuf_deps()
 #############
 # Packaging #
 #############
-http_archive(
-    name = "aisbaa_rules_deb_packages",
-    sha256 = "efff23139e27eccf22f696dda42265903b1eff6dfa2420c4339aa98cdc80a7b9",
-    urls = [
-        "https://github.com/aisbaa/deb_packages/releases/download/v0.3-beta/deb_packages.tar.gz",
-    ],
-)
-
 load("@aisbaa_rules_deb_packages//deb_packages:deps.bzl", "deb_packages_setup")
 
 deb_packages_setup()
+
+load("@bazel_tools//tools/build_defs/repo:http.bzl", "http_file")
 
 # dowload gpg key for Debian 11
 http_file(
@@ -136,8 +86,8 @@ deb_repository(
     distro = "bullseye",
     distro_type = "debian",
     mirrors = [
-        "http://snapshot.debian.org/archive/debian/20210223T211250Z/",
         "http://deb.debian.org/debian",
+        "http://snapshot.debian.org/archive/debian/20210223T211250Z/",
     ],
     packages = {
         "fd-find": "pool/main/r/rust-fd-find/fd-find_8.2.1-1+b1_amd64.deb",
